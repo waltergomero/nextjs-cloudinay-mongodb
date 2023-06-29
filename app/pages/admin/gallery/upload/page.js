@@ -93,6 +93,8 @@ const UploadPage = () => {
             placeholder="Title"
             className="w-full px-4 py-1 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
               />
+      </div>
+      <div>
         <select
             name="_id"
             placeholder="Select a category"

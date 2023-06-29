@@ -15,7 +15,7 @@ export default function Login() {
         <Link href="/pages/admin/status"> Status </Link>
         <Link href="/pages/admin/users"> Users </Link>
           <p className="text-sky-600">Welcome {session.user.first_name}</p>
-          <button className="text-red-500" onClick={() => signOut()}> Sign Out </button>
+          <button className="text-red-500" onClick={() => signOut({callbackUrl: "/"})}> Sign Out </button>
         </>
       ) : (
 <         button className="text-green-500" onClick={() => signIn()}> Sign In </button>
