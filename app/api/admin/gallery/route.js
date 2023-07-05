@@ -3,20 +3,22 @@ import Gallery from '@/models/gallery';
 
 export const GET = async (request, { params }) => {
     const req = request.json();
+
+     console.log("data from end: ", req)
     try {
         await db.connect()
 
-        let category_id = "0";
-        let query = "{}";
+        // let category_id = "0";
+        // let query = "{}";
 
-        if (params.id != category_id) {
-            query = { user_id: req.user.userid, category_id: params.id };
-          } else {
-            query = { user_id: req.user.userid };
-          }
+        // if (params.id != category_id) {
+        //     query = { user_id: req.user.userid, category_id: params.id };
+        //   } else {
+        //     query = { user_id: req.user.userid };
+        //   }
         
-
-        const data = await Gallery.find(query);
+        //const data = await Gallery.find(query);
+        const data = await Gallery.find();
         await db.disconnect();
 
         return new Response(JSON.stringify(data), { status: 200 })

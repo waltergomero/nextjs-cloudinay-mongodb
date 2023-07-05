@@ -79,7 +79,7 @@ const UploadPage = () => {
     <section className='flex h-full flex-col items-center mt-10'>
     <div className="columns-sm px-8 py-2 text-left bg-white shadow-lg rounded-md border border-gray-200 ">
     <h2 className='text-lg leading-tight font-medium mt-2'>
-      <span className='blue_gradient'>Upload Images</span>
+      <span className='blue_gradient'>Select an image</span>
     </h2> 
     <form onSubmit={handlerAddImage}>
       <div>
@@ -123,7 +123,7 @@ const UploadPage = () => {
             <div className='flex justify-center'>
                 <button
                     onClick={removeSelectedImage}
-                    className="w-64 justify-center py-1 mt-1 mb-1 text-white text-xs rounded-md bg-red-500"
+                    className=" justify-center px-4 py-1.5 text-white text-xs rounded-md bg-red-500"
                   >
                     Remove this image
                 </button>
@@ -143,7 +143,11 @@ const UploadPage = () => {
         
         )}
       </div>
-      <button type="submit">Upload</button>
+      <div className='flex items-center justify-center mt-2'>
+       <button className='px-5 py-1.5 text-sm bg-blue-600 rounded-lg text-white justify-right'
+       type="submit">Upload Image</button>
+      </div>
+    
     </form>
     </div>
     </section>

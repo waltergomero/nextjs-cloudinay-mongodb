@@ -4,8 +4,8 @@ import Login from "./login";
 
 const NavBar = () => {
   return (
-    <div className="bg-gradient-to-b from-cyan-50 to-cyan-200 p-2 flex gap-5">
-        <Link href="/">Home</Link>
+    <div className="bg-black p-2 flex gap-5">
+        <Link className="text-gray-100" href="/">Home</Link>
         <Login/>
     </div>
   )

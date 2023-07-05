@@ -27,7 +27,12 @@ export default function RootLayout({ children }) {
       <body>
       <Provider>
       <div className="flex flex-col min-h-screen">
-         {children}
+        <NavBar/>
+        <main className="flex-1">
+          <Alert/>
+          {children}
+        </main>
+        <Footer/>
         </div>
       </Provider>
       </body>

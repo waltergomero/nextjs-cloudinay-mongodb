@@ -38,8 +38,7 @@ const CategoryTable = (props) => {
           </tr>
         </thead>
         <tbody>
-          {category &&
-            category.map((s) => (
+          {category && category.map((s) => (
               <tr className="border-b" key={s._id}>
                 <td className="px-6 py-1 whitespace-nowrap text-sm font-medium text-gray-900 border-r">
                   {s._id}

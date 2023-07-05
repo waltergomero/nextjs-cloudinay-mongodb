@@ -4,7 +4,7 @@ import Gallery from '@/models/gallery';
 
 export const POST = async (request, response) => {
     const req = await request.json();
-
+    console.log("req: ", req)
     try {
       await db.connect();
 
