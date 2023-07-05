@@ -49,10 +49,12 @@ export default function UploadMultiple() {
                     formdata.append('file', compressedFile);
                     formdata.append("upload_preset", "gallery")
       
-                    const data =  fetch('https://api.cloudinary.com/v1_1/wgomero-dev/image/upload', {
+                    const data = fetch('https://api.cloudinary.com/v1_1/wgomero-dev/image/upload', {
                     method: 'POST',
                     body: formdata
                         }).then(r => r.json());
+                    
+                    console.log("data from cloudinay: ", data)
                     
                     fetch("/api/admin/gallery/new", {method: "POST", body: JSON.stringify({ imageInformation, url: data.url, image_name: data.public_id, height: data.height, width: data.width}),})
                     .then((response) => response.json())
