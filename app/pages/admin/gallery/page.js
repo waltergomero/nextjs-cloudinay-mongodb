@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 import Link from 'next/link';
 import Image from 'next/image';
 import { FaPencilAlt, FaTrashAlt } from "react-icons/fa";
-
+import { CldImage } from 'next-cloudinary';
 import { useRouter } from "next/navigation";
 
 const apiUrl = process.env.public_url_api;
@@ -50,7 +50,7 @@ return (
         <div className="grid grid-flow-row grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
          {images && images.map((item) => (
             <div key={item._id} className="shadow-lg rounded-lg">
-              <div className="w-84 h-72 relative">
+              <div className="w-84  h-72 relative">
                 <Image
                   src={item.url}
                   fill

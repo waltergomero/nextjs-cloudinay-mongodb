@@ -14,7 +14,7 @@ export default function UploadMultiple() {
   const [ddCategorylist, setDDCategoryList] = useState(null);
   const [selectedFiles, setSelectedFiles] = useState(null);
   const [imageInformation, setImageInformation] = useState(
-    { title: " ", category_name: "", category_id: "", description: " ", user_id:"", email: ""});
+    { title: "", category_name: "", category_id: "", description: " ", user_id:"", email: ""});
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -22,7 +22,7 @@ export default function UploadMultiple() {
     const ddlData = await response.json()
 
     setDDCategoryList(ddlData);
-    setImageInformation({user_id: session?.user._id, email: session?.user.email})
+    setImageInformation({title:".", user_id: session?.user._id, email: session?.user.email})
 
     };
     fetchCategories();
@@ -34,42 +34,45 @@ export default function UploadMultiple() {
     setSelectedFiles(Array.from(e.target.files))
   }
 
+
   const handlerAddImages = async (e) => {
     e.preventDefault();
  
-    if (selectedFiles != null) {
+   if (selectedFiles != null) {
         selectedFiles.map((image, index) => {
-           
             new Compressor(image, {
                 quality: 0.9, // 0.6 can also be used, but its not recommended to go below.
                 maxWidth: 1290,
                 maxHeight: 1290,
-                success: (result) => {
-                    const formdata = new FormData();
-                    formdata.append('file', compressedFile);
-                    formdata.append("upload_preset", "gallery")
-      
-                    const data = fetch('https://api.cloudinary.com/v1_1/wgomero-dev/image/upload', {
-                    method: 'POST',
-                    body: formdata
-                        }).then(r => r.json());
-                    
-                    console.log("data from cloudinay: ", data)
-                    
-                    fetch("/api/admin/gallery/new", {method: "POST", body: JSON.stringify({ imageInformation, url: data.url, image_name: data.public_id, height: data.height, width: data.width}),})
-                    .then((response) => response.json())
-                    .then(data => {
-                    console.log("data: ", data)
-                    if(data.error){
-                        alertService.error(data.error);
-                        }
-                    else{
-                        router.push("/pages/admin/gallery")
-                        }
-                    })
-                    .catch(error => alertService.error(error.message))
+                success: async (result) => {
+                  console.log("Image ", image)
+                
+                   const formdata = new FormData();
+                   formdata.append('file', result);
+                   formdata.append("upload_preset", "gallery")
+       
+                   const data =  await fetch('https://api.cloudinary.com/v1_1/wgomero-dev/image/upload', {
+                   method: 'POST',
+                   body: formdata
+                       }).then(r => r.json());
+                   
+                   console.log("image information: ", imageInformation)
+
+                  await fetch("/api/admin/gallery/new", {method: "POST", body: JSON.stringify({ imageInformation, url: data.url, image_name: data.public_id, height: data.height, width: data.width}),})
+                  .then((response) => response.json())
+                  .then(data => {
+                  console.log("data: ", data)
+                  if(data.error){
+                      alertService.error(data.error);
+                      }
+                  else{
+                      router.push("/pages/admin/gallery")
+                      }
+                  })
+                  .catch(error => alertService.error(error.message))   
                 },
             });
+
     })
   }
 }
