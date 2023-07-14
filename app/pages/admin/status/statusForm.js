@@ -47,7 +47,7 @@ const Form = ({ type, status, setStatus, submitting, handleSubmit }) => {
             name="status_name"
             value={status.status_name}
             onChange={(e) => setStatus({ ...status, status_name: e.target.value })}
-            required
+            required title="Please enter status name"
             className='w-full px-4 py-1 text-sm border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600'
           />
         </label>

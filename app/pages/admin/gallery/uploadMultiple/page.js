@@ -42,8 +42,8 @@ export default function UploadMultiple() {
         selectedFiles.map((image, index) => {
             new Compressor(image, {
                 quality: 0.9, // 0.6 can also be used, but its not recommended to go below.
-                maxWidth: 1290,
-                maxHeight: 1290,
+                maxWidth: 1870,
+                maxHeight: 1870,
                 success: async (result) => {
                   console.log("Image ", image)
                 

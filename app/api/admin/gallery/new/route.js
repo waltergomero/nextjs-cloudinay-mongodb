@@ -1,12 +1,11 @@
 import db from '@/utils/db';
 import Gallery from '@/models/gallery';
-
+import Collection from '@/models/collection';
 
 export const POST = async (request, response) => {
     const req = await request.json();
-    console.log("req: ", req)
     try {
-      await db.connect();
+     
 
        let _islandscape = true;
 
@@ -28,7 +27,26 @@ export const POST = async (request, response) => {
           email: req.imageInformation.email,        
             });
 
-          await newImage.save();       
+          await db.connect();
+
+          await newImage.save(); 
+
+        const categoryExists = await Collection.findOne({ category_name: req.imageInformation.category_name,});
+        if (categoryExists) {
+          const query = {
+            category_name: req.imageInformation.category_name,
+            image_url: req.url,
+          };
+          await Collection.updateOne({ category_id: category_id }, query);
+        } else {
+          const addCategoryToCollection = new Collection({
+            category_id: req.imageInformation.category_id,
+            category_name: req.imageInformation.category_name,
+            image_url: req.url,
+          });
+          
+          await addCategoryToCollection.save();
+        }
 
           await db.disconnect();
           return  new Response(JSON.stringify({sucess: "Image was successfully added."}), { status: 201 });
