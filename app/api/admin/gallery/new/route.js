@@ -32,13 +32,18 @@ export const POST = async (request, response) => {
           await newImage.save(); 
 
         const categoryExists = await Collection.findOne({ category_name: req.imageInformation.category_name,});
+        console.log("exist? ", categoryExists)
         if (categoryExists) {
           const query = {
+            category_id: req.imageInformation.category_id,
             category_name: req.imageInformation.category_name,
             image_url: req.url,
           };
-          await Collection.updateOne({ category_id: category_id }, query);
-        } else {
+
+          updateCollection(query, categoryExists._id)
+
+        } 
+        else {
           const addCategoryToCollection = new Collection({
             category_id: req.imageInformation.category_id,
             category_name: req.imageInformation.category_name,
@@ -58,4 +63,6 @@ export const POST = async (request, response) => {
   };
    
 
-  
+ function updateCollection (query, _id) {
+   Collection.updateOne({ _id: _id, }, query);
+  }
