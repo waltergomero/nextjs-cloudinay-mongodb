@@ -35,7 +35,6 @@ export default function HomePage() {
 }, []);
 
 
-  console.log("Index Page On refresh: ", imageList);
   return (
       <main className="mx-auto max-w-[1960px] p-1 ">
         <div className="columns-1 gap-2 sm:columns-2 xl:columns-3 2xl:columns-4">
@@ -54,7 +53,7 @@ export default function HomePage() {
 
             <a
               className=" z-10 mt-6 rounded-lg border border-gray-900 bg-gray-800 px-3 py-2 text-sm font-semibold text-gray-200 transition hover:bg-gray-900 hover:text-white md:mt-4"
-              href="/bycategories"
+              href="/categories"
               rel="noreferrer"
             >
               View photos by categories

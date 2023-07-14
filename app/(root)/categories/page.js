@@ -2,8 +2,12 @@
 
 import React from 'react';
 import { useState, useEffect } from "react";
+import Link from 'next/link';
+import Image from 'next/image';
+
 const apiUrl = process.env.public_url_api;
-const baseApiUrl = `${apiUrl}/front/bycategories`;
+const baseApiUrl = `${apiUrl}/front/categories`;
+
 
 const ByCategories = () => {
 
@@ -28,14 +32,14 @@ const ByCategories = () => {
         categories?.map((item) => (
           <div>
             <Link
-              href={`/imagesbycategory?id=${item.category_id}`}
+              href={`/bycategory?id=${item.category_id}`}
               key={item.category_id}
               className="after:content group relative mb-5 block w-full cursor-zoom-in after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight"
             >
               <Image
                 alt={item.category_name}
                 className="transform rounded-lg brightness-90 transition will-change-auto group-hover:brightness-110 cursor-pointer"
-                src={"/" + item.image_url}
+                src={item.image_url}
                 width={720}
                 height={480}
                 sizes="(max-width: 640px) 100vw,

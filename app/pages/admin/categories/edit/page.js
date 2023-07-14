@@ -14,7 +14,7 @@ const UpdateCategory = () => {
   const [submitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    const getStatusDetails = async () => {
+    const getCategoryDetails = async () => {
       const response = await fetch(`/api/admin/categories/${categoryId}`);
       const data = await response.json();
 
@@ -26,7 +26,7 @@ const UpdateCategory = () => {
       });
     };
 
-    if (categoryId) getStatusDetails();
+    if (categoryId) getCategoryDetails();
   }, [categoryId]);
 
 

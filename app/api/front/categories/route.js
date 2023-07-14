@@ -1,5 +1,5 @@
 import db from '@/utils/db';
-import Gallery from '@/models/gallery';
+import Collection from '@/models/collection';
 
 export const GET = async (request, { params }) => {
     const query = {};
