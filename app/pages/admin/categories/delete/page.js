@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { alertService } from "@/services/alert.service";
 
 const apiUrl = process.env.public_url_api;
-const baseUrl = `${apiUrl}/admin/categories`;
+const baseUrl = `${apiUrl}/admin/gallery`;
 
 const DeletePage =() => {
   const router = useRouter();

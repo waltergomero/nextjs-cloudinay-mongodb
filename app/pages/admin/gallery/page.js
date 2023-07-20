@@ -61,14 +61,14 @@ return (
               </div>
               <div className="flex justify-between">
                   <Link
-                    href={`/admin/gallery/edit/${item._id}`}
+                    href={`/pages/admin/gallery/edit?id=${item._id}`}
                     className="rounded-full py-2 px-4 text-gray-500 text-sm"
                   ><div className="flex justify-between">
                     <FaPencilAlt/>  Edit
                     </div>
                   </Link>
                   <Link
-                    href={`/admin/gallery/delete/${item._id}`}
+                    href={`/pages/admin/gallery/delete?id=${item._id}`}
                     className=" rounded-full py-2 px-4 text-red-500 text-sm"
                   ><div className="flex justify-between">
                     <FaTrashAlt /> Delete </div>

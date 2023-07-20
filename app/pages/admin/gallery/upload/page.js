@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import Compressor from "compressorjs";
 import { alertService } from '@/services/alert.service';
 import { useRouter} from "next/navigation";
+import Link from 'next/link';
 
 const UploadPage = () => {
     const {data: session} = useSession();
@@ -143,7 +144,11 @@ const UploadPage = () => {
         
         )}
       </div>
-      <div className='flex items-center justify-center mt-2'>
+      <div className='flex items-center justify-center mt-2 gap-2'>
+      <Link href='/pages/admin/gallery' 
+              className='px-5 py-1.5 text-sm bg-gray-500 rounded-lg text-white'>
+              Cancel
+        </Link>
        <button className='px-5 py-1.5 text-sm bg-blue-600 rounded-lg text-white justify-right'
        type="submit">Upload Image</button>
       </div>

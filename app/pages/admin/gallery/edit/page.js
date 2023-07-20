@@ -2,15 +2,16 @@
 
 import { useState, useEffect } from 'react';
 import { useSession } from "next-auth/react";
-import Compressor from "compressorjs";
-import { alertService } from '@/services/alert.service';
-import { useRouter} from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import Link from 'next/link';
 
 const EditPage = () => {
     const {data: session} = useSession();
     const router = useRouter();
 
-    const [compressedFile, setCompressedFile] = useState(null);
+    const searchParams = useSearchParams();
+    const imageId = searchParams.get("id");
+
     const [ddCategorylist, setDDCategoryList] = useState(null);
     const [imageInformation, setImageInformation] = useState(
         { title: "", category_name: "", category_id: "", description: "", user_id:"", email: "", url:"", });
@@ -27,7 +28,7 @@ const EditPage = () => {
       fetchCategories();
 
         const getImageDetails = async () => {
-        const response = await fetch(`/api/admin/categories/${categoryId}`);
+        const response = await fetch(`/api/admin/gallery/${imageId}`);
         const imagedata = await response.json();
   
         setImageInformation({
@@ -47,21 +48,9 @@ const EditPage = () => {
     const handlerUpdateImage = async (e) => {
         e.preventDefault();
 
-        if (compressedFile != null) {
-           const formdata = new FormData();
-           formdata.append('file', compressedFile);
-           formdata.append("upload_preset", "gallery")
-          
-           const data = await fetch('https://api.cloudinary.com/v1_1/wgomero-dev/image/upload', {
-                        method: 'POST',
-                        body: formdata
-                 }).then(r => r.json());
-
-
-        await fetch("/api/admin/gallery/new", {method: "POST", body: JSON.stringify({ imageInformation, url: data.url, image_name: data.public_id, height: data.height, width: data.width}),})
+        await fetch(`/api/admin/gallery/${imageId}`, {method: "PATCH", body: JSON.stringify({ imageInformation,}),})
         .then((response) => response.json())
         .then(data => {
-          console.log("data: ", data)
           if(data.error){
             alertService.error(data.error);
             }
@@ -70,14 +59,14 @@ const EditPage = () => {
           }
           })
         .catch(error => alertService.error(error.message))
-        };
+     
       }
 
   return (
     <section className='flex h-full flex-col items-center mt-10'>
     <div className="columns-sm px-8 py-2 text-left bg-white shadow-lg rounded-md border border-gray-200 ">
     <h2 className='text-lg leading-tight font-medium mt-2'>
-      <span className='blue_gradient'>Select an image</span>
+      <span className='blue_gradient'>Edit Image Information</span>
     </h2> 
     <form onSubmit={handlerUpdateImage}>
       <div>
@@ -85,6 +74,7 @@ const EditPage = () => {
             name="title"
             maxLength="48"
             type="text"
+            value={imageInformation.title}
             onChange={(e) => setImageInformation({ ...imageInformation, title: e.target.value })}
             required
             placeholder="Title"
@@ -119,6 +109,7 @@ const EditPage = () => {
                 <textarea
                     name="description"
                     placeholder="Description"
+                    value={imageInformation.description}
                     onChange={(e) => setImageInformation({ ...imageInformation, description: e.target.value })}
                     rows={2}
                     cols={5}
@@ -127,9 +118,13 @@ const EditPage = () => {
                   />                  
             </div>
       </div>
-      <div className='flex items-center justify-center mt-2'>
+      <div className='flex items-center justify-center mt-2 gap-2'>
+      <Link href='/pages/admin/gallery' 
+              className='px-5 py-1.5 text-sm bg-gray-500 rounded-lg text-white'>
+              Cancel
+        </Link>
        <button className='px-5 py-1.5 text-sm bg-blue-600 rounded-lg text-white justify-right'
-       type="submit">Upload Image</button>
+       type="submit">Save</button>
       </div>
     
     </form>
